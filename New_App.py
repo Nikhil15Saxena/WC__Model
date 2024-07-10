@@ -23,10 +23,28 @@ def detect_language(text):
     try:
         translator = Translator()
         detection = translator.detect(text)
-        return detection.lang
+        if detection is not None:
+            return detection.lang
+        else:
+            st.error("Language detection failed.")
+            return None
     except Exception as e:
         st.error(f"Error detecting language: {e}")
         return None
+
+# Function to translate text to a target language
+def translate_text(text, target_lang='en'):
+    try:
+        translator = Translator()
+        translation = translator.translate(text, dest=target_lang)
+        if translation is not None:
+            return translation.text
+        else:
+            st.error("Translation failed.")
+            return text
+    except Exception as e:
+        st.error(f"Error translating text: {e}")
+        return text
 
 # Function to translate text to a target language
 def translate_text(text, target_lang='en'):
